@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weplayball/models/teamDetails.dart';
 import 'package:weplayball/pages/teamDetails/teamDetailsHeader.dart';
+import 'package:weplayball/pages/teamDetails/teamLastResult.dart';
 import 'package:weplayball/pages/teamDetails/teamNextFixture.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/sharedHeader.dart';
@@ -29,6 +30,9 @@ class TeamView extends StatelessWidget{
 
     //  3. Next fixture
     widgetList.add(TeamNextFixture(teamData.nextMatch, assetBaseUrl));
+
+    //  4. Last result
+    widgetList.add(TeamLastResult(teamData.lastResult, assetBaseUrl));
 
     widgetList.add(TeamStats(teamData:teamData));
 

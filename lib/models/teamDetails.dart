@@ -1,4 +1,5 @@
 import 'package:weplayball/models/fixture.dart';
+import 'package:weplayball/models/result.dart';
 
 class TeamDetailsModel {
   final String teamName;
@@ -28,6 +29,7 @@ class TeamDetailsModel {
   final String winPercentage;
   final int subDivisionCount;
   final FixtureModel nextMatch;
+  final ResultModel lastResult;
 
   TeamDetailsModel({
     this.teamName,
@@ -56,7 +58,8 @@ class TeamDetailsModel {
     this.lossPercentage,
     this.winPercentage,
     this.subDivisionCount,
-    this.nextMatch
+    this.nextMatch,
+    this.lastResult
   });
 
   factory TeamDetailsModel.fromJson(Map<String, dynamic> json){
@@ -87,7 +90,8 @@ class TeamDetailsModel {
         lossPercentage: json['lossPercentage'],
         winPercentage: json['winPercentage'],
         subDivisionCount: json['subDivisionCount'],
-        nextMatch: FixtureModel.fromJson(json['teamNextMatch'])
+        nextMatch: FixtureModel.fromJson(json['teamNextMatch']),
+        lastResult: ResultModel.fromJson(json['teamLastResult'])
     );
   }
 

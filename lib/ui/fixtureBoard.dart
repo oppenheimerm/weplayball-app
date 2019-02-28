@@ -13,7 +13,7 @@ class FixtureBoard extends StatelessWidget
   final FixtureModel fixtureModel;
   final bool disabledClickEvent;
 
-  const FixtureBoard(this.fixtureModel, this.assetBaseUrl, this.disabledClickEvent, { Key key }) : super(key: key);
+  FixtureBoard(this.fixtureModel, this.assetBaseUrl, this.disabledClickEvent, { Key key }) : super(key: key);
 
   _handleTap(BuildContext context,String teamCode){
     print("fetching datat for team: ${teamCode}") ;

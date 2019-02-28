@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:weplayball/models/fixture.dart';
+import 'package:weplayball/models/result.dart';
 import 'package:weplayball/ui/colors.dart';
-import 'package:weplayball/ui/fixtureBoard.dart';
 import 'package:weplayball/ui/layout.dart';
+import 'package:weplayball/ui/resultBoard.dart';
 
-class TeamNextFixture extends StatelessWidget{
+class TeamLastResult extends StatelessWidget{
 
-  final FixtureModel fixtureModel;
+  final ResultModel lastResult;
   final String assetBaseUrl;
 
-  TeamNextFixture(
-      this.fixtureModel,
+  TeamLastResult(
+      this.lastResult,
       this.assetBaseUrl
       );
 
@@ -30,7 +30,7 @@ class TeamNextFixture extends StatelessWidget{
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Next Match",
+            "Last Result",
             textAlign: TextAlign.left,
             style: TextStyle(
               fontWeight: FontWeight.w900,
@@ -51,8 +51,8 @@ class TeamNextFixture extends StatelessWidget{
             color: Colors.white,
             child: Container(
               padding: const EdgeInsets.all(8.0),
-              child: FixtureBoard(
-                  fixtureModel,
+              child: ResultBoard(
+                  lastResult,
                   assetBaseUrl,
                   true
               ),

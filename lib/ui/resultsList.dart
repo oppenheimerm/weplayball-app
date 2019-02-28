@@ -5,6 +5,7 @@ import 'package:weplayball/models/result.dart';
 import 'package:weplayball/pages/teamDetails/teamDetails.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/layout.dart';
+import 'package:weplayball/ui/resultBoard.dart';
 
 //  Responsible for building the results view
 
@@ -53,7 +54,8 @@ class ResultsList extends StatelessWidget {
                 color: Colors.white,
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
+                  child:
+                  /*Row(
                     children: <Widget>[
                       Expanded(
                           child: buildTeamCell(
@@ -82,7 +84,8 @@ class ResultsList extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
+                  ),*/
+                  ResultBoard(resultData[index], assetBaseUrl, false)
                 ),
               ),
               //  add some padding
@@ -100,7 +103,7 @@ class ResultsList extends StatelessWidget {
 
   }
 
-  Column buildTeamCell(bool teamHasLogo, CrossAxisAlignment alignment,
+  /*Column buildTeamCell(bool teamHasLogo, CrossAxisAlignment alignment,
       String teamName, String teamCode, String teamLogoUrl, BuildContext context)
   {
     Widget team;
@@ -117,9 +120,9 @@ class ResultsList extends StatelessWidget {
         team
       ],
     );
-  }
+  }*/
 
-  Column buildDetailCell(DateTime time, String division, String score)
+  /*Column buildDetailCell(DateTime time, String division, String score)
   {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,9 +163,9 @@ class ResultsList extends StatelessWidget {
         ),
       ],
     );
-  }
+  }*/
 
-  GestureDetector buildTeamWithLogo(String teamLogoUrl, String teamName, String teamCode, BuildContext context)
+  /*GestureDetector buildTeamWithLogo(String teamLogoUrl, String teamName, String teamCode, BuildContext context)
   {
     return GestureDetector(
       onDoubleTap: () => _handleTap(context, teamCode),
@@ -215,11 +218,11 @@ class ResultsList extends StatelessWidget {
         ),
       ),
     );
-  }
+  }*/
 
 
 
-  GestureDetector teamNoLogo(String teamName, String teamCode, BuildContext context)
+  /*GestureDetector teamNoLogo(String teamName, String teamCode, BuildContext context)
   {
     return GestureDetector(
       onDoubleTap: () => _handleTap(context, teamCode),/* note () => _handleTap(teamCode) vs _handleTap(teamCode) !! */
@@ -260,9 +263,9 @@ class ResultsList extends StatelessWidget {
 
       ),
     );
-  }
+  }*/
 
-  Expanded buildMiddle(String score, DateTime time, String division)
+  /*Expanded buildMiddle(String score, DateTime time, String division)
   {
     var middleCell = new Expanded(
       child: Column(
@@ -299,12 +302,12 @@ class ResultsList extends StatelessWidget {
 
     return middleCell;
 
-  }
+  }*/
 
-  String formatTime(DateTime time){
+  /*String formatTime(DateTime time){
     var timeText;
     //return DateFormat("EEE, MMM d, ''yy", "en_GB").format(time);
     return DateFormat("EEE, MMM d").format(time);
-  }
+  }*/
 
 }

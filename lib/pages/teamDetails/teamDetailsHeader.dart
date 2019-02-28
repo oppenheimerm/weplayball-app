@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:weplayball/models/teamDetails.dart';
-import 'package:weplayball/ui/arcClipper.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/layout.dart';
 
@@ -12,12 +11,6 @@ class TeamDetailsHeader extends StatelessWidget{
   final TeamDetailsModel teamDetails;
   final String assetBaseUrl;
 
-  TextStyle subTitle = TextStyle(color: Color(getColourHexFromString(primaryDarkGrey)));
-  TextStyle itemTitle = TextStyle(
-      fontSize: 40.0,
-      fontWeight: FontWeight.bold,
-      color: Color(getColourHexFromString(primaryBlack))
-  );
 
 
   @override
@@ -42,7 +35,7 @@ class TeamDetailsHeader extends StatelessWidget{
                     borderRadius: BorderRadius.all(Radius.circular(8.0))
                 ),
                 margin: EdgeInsets.symmetric(horizontal: 16.0),
-                elevation: 5.0,
+                elevation: 3.0,
                 color: Colors.white,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 22.0),
@@ -79,7 +72,7 @@ class TeamDetailsHeader extends StatelessWidget{
                         teamDetails.teamCode.toUpperCase(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontWeight: FontWeight.w100,
+                          fontWeight: FontWeight.w400,
                           fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
@@ -106,7 +99,7 @@ class TeamDetailsHeader extends StatelessWidget{
                         "DIVISION",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontWeight: FontWeight.w100,
+                          fontWeight: FontWeight.w400,
                           fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
@@ -115,7 +108,6 @@ class TeamDetailsHeader extends StatelessWidget{
                       SizedBox(
                         height: 24,
                       ),
-                      /* RANK HERE*/
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -130,7 +122,7 @@ class TeamDetailsHeader extends StatelessWidget{
                         "RANK",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontWeight: FontWeight.w100,
+                          fontWeight: FontWeight.w400,
                           fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
@@ -251,7 +243,7 @@ class TeamDetailsHeader extends StatelessWidget{
               padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text("of ${teamDetails.subDivisionCount.toString()}",
                   style: TextStyle(
-                    fontWeight: FontWeight.w100,
+                    fontWeight: FontWeight.w400,
                     fontFamily: 'Poppins',
                     color: Color(getColourHexFromString(primaryBlack)),
                     fontSize: fontSizeH5,

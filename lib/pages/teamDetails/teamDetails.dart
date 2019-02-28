@@ -5,7 +5,7 @@ import 'package:weplayball/models/teamDetails.dart';
 import 'package:weplayball/service/response/parsedResponse.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/layout.dart';
-import 'package:weplayball/ui/teamView.dart';
+import 'package:weplayball/pages/teamDetails/teamView.dart';
 
 class TeamDetailsPage extends StatefulWidget {
   final String teamCode;

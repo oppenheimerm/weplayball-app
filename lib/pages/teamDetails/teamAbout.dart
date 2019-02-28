@@ -20,8 +20,6 @@ class _TeamAboutState extends State<TeamAbout> with TickerProviderStateMixin<Tea
   @override
   Widget build(BuildContext context) {
 
-
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

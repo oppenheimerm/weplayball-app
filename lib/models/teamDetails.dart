@@ -30,6 +30,7 @@ class TeamDetailsModel {
   final int subDivisionCount;
   final FixtureModel nextMatch;
   final ResultModel lastResult;
+  final String about;
 
   TeamDetailsModel({
     this.teamName,
@@ -59,7 +60,8 @@ class TeamDetailsModel {
     this.winPercentage,
     this.subDivisionCount,
     this.nextMatch,
-    this.lastResult
+    this.lastResult,
+    this.about
   });
 
   factory TeamDetailsModel.fromJson(Map<String, dynamic> json){
@@ -80,7 +82,7 @@ class TeamDetailsModel {
         gamesWon: json['gamesWon'],
         gamesLost: json['gamesLost'],
         basketsFor: json['basketsFor'],
-        basketsAgainst: json['basketsAgainst'],
+        basketsAgainst: json['basketsAganist'],
         pointsDifference: json['pointsDifference'],
         points: json['points'],
         wPyth: json['wPyth'],
@@ -91,7 +93,8 @@ class TeamDetailsModel {
         winPercentage: json['winPercentage'],
         subDivisionCount: json['subDivisionCount'],
         nextMatch: FixtureModel.fromJson(json['teamNextMatch']),
-        lastResult: ResultModel.fromJson(json['teamLastResult'])
+        lastResult: ResultModel.fromJson(json['teamLastResult']),
+        about: json['about'],
     );
   }
 

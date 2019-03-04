@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weplayball/models/teamDetails.dart';
 import 'package:weplayball/models/teamStat.dart';
+import 'package:weplayball/ui/colors.dart';
+import 'package:weplayball/ui/layout.dart';
 import 'package:weplayball/ui/statSummary.dart';
 
 //  Scrollable widget
@@ -16,7 +18,7 @@ class TeamStats extends StatelessWidget{
 
     return Padding(
       padding: const EdgeInsets.only(right: 16.0),
-      child: StatSummary(teamStat:teamStatCard),
+      child: StatSummary(teamStatCard),
     );
   }
 
@@ -56,27 +58,30 @@ class TeamStats extends StatelessWidget{
     return Container(
 
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          addSizedBoxPadding(12.0, 0),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: 16.0,
-                ),
-                Text("RECENT CHALLENGES",
-                    style: TextStyle(
-                        color: Color(0xFF30314A), fontWeight: FontWeight.bold)),
-                Spacer(),
-              ],
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child:  Text(
+              "Team Stats",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontFamily: 'Poppins',
+                color: Color(getColourHexFromString(primaryBlack)),
+                fontSize: fontSizeH4,
+              ),
             ),
           ),
+          SizedBox(
+            width: 8.0,
+          ),
+
           Container(
             height: 219.0,
             child: ListView(
-              scrollDirection: Axis.horizontal, children: statCards.map((item) => new StatSummary(teamStat:item)).toList(),
+              scrollDirection: Axis.horizontal, children: statCards.map((item) => new StatSummary(item)).toList(),
             ),
           )
         ],
@@ -221,7 +226,7 @@ class TeamStats extends StatelessWidget{
         statName: "Games Won",
         statDescription: "GW - Total number of games won by this team.",
         statIcon: "graphics/icon-gw.png",
-        statValue: teamData.gamesLost.toString()
+        statValue: teamData.gamesWon.toString()
     );
     return teamStatModel;
   }

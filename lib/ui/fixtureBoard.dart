@@ -235,7 +235,7 @@ class FixtureBoard extends StatelessWidget
                 child: Text(
                     teamCode,
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: fontSizeH2,
                       fontWeight: FontWeight.bold,
                       color: Color(getColourHexFromString(primaryBlack)),
                     )

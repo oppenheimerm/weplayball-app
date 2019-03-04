@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:weplayball/models/teamStat.dart';
 import 'package:weplayball/ui/colors.dart';
+import 'package:weplayball/ui/layout.dart';
 
 //  Represents an instance of a stat card
 class StatSummary extends StatelessWidget {
 
   final TeamStatModel teamStat;
 
-  StatSummary({Key key, this.teamStat}) : super(key: key);
+  StatSummary(this.teamStat, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +49,32 @@ class StatSummary extends StatelessWidget {
           new Container(height: 4.0),
           Flexible(
             child: Center(
-              child: new Text(teamStat.statName/*, style: Style.titleTextStyle*/),
+              child: new Text(teamStat.statName.toUpperCase(),
+                  style: TextStyle(
+                    fontSize: fontSizeH5,
+                    fontWeight: FontWeight.bold,
+                    color: Color(getColourHexFromString(primaryBlack)),
+                  ),),
             ),
           ),
           Flexible(
             child: Center(
-              child: new Text(teamStat.statValue/*, style: Style.titleTextStyle*/),
+              child: new Text(teamStat.statValue,
+              style: TextStyle(
+                fontSize: fontSizeH2,
+                fontWeight: FontWeight.bold,
+                color: Color(getColourHexFromString(primaryBlack))
+              ),),
             ),
           ),
           new Container(height: 10.0),
           Flexible(
             child: Center(
-              child: new Text(teamStat.statDescription/*, style: Style.commonTextStyle*/),
+              child: new Text(teamStat.statDescription,
+              style: TextStyle(
+                fontSize: fontSizeH5,
+                color: Color(getColourHexFromString(primaryBlack)),
+              )),
             ),
           ),
 
@@ -70,17 +85,17 @@ class StatSummary extends StatelessWidget {
     final statCard = new Container(
       width: MediaQuery.of(context).size.width - 100,
       child: statCardContent,
-      height: 198.0,
+      height: 210.0,
       margin: new EdgeInsets.only(left: 46.0),
       decoration: new BoxDecoration(
-        color: Color(getColourHexFromString(primaryBlue)),
+        color: Colors.white,
         shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(8.0),
+        borderRadius: new BorderRadius.circular(stdBorderRadius),
         boxShadow: <BoxShadow>[
           new BoxShadow(
             color: Colors.black12,
-            blurRadius: 10.0,
-            offset: new Offset(0.0, 10.0),
+            blurRadius: 1.0,
+            offset: new Offset(0.0, 1.5),
           ),
         ],
       ),

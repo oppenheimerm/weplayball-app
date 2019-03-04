@@ -14,7 +14,6 @@ class TeamView extends StatelessWidget{
 
   final TeamDetailsModel teamData;
   final String assetBaseUrl;
-  final String about = "Flutter is Google’s mobile UI framework for crafting high-quality native interfaces on iOS and Android in record time. Flutter works with existing code, is used by developers and organizations around the world, and is free and open source.";
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,12 @@ class TeamView extends StatelessWidget{
     widgetList.add(TeamDetailsHeader(teamData, assetBaseUrl));
 
     //  2. About
-    widgetList.add(TeamAbout(about));
+    var showAbout = hasAbout(teamData.about);
+    if(showAbout)
+    {
+      widgetList.add(TeamAbout(teamData.about));
+    }
+
 
     //  3. Next fixture
     widgetList.add(TeamNextFixture(teamData.nextMatch, assetBaseUrl));
@@ -55,6 +59,13 @@ class TeamView extends StatelessWidget{
 
     //  build main layout with our standard shared main header widget
     return MainHeader(widgetList);*/
+  }
+
+  bool hasAbout(String about)
+  {
+    print("Team About value: ${about}");
+    var result = (about == null) ? false : true;
+    return result;
   }
 
 /*Widget createView(BuildContext context, TeamDetailsModel data)

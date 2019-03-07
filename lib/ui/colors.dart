@@ -17,7 +17,7 @@ const String primaryBlue = "#a3d4e7";
 const String primaryWhiteGrey = "#f2f3f3";
 
 Color gradientStart = Color(getColourHexFromString("#FCFCFC"));
-Color gradientEnd = Color(getColourHexFromString("#F8F9F8"));
+Color gradientEnd = Color(getColourHexFromString(primaryBlue));
 
 int getColourHexFromString(String colourString)
 {

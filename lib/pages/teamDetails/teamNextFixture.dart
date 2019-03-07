@@ -45,7 +45,30 @@ class TeamNextFixture extends StatelessWidget{
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Material(
+          child: Container(
+            alignment: Alignment.center,
+            //padding: new EdgeInsets.all(8.0),
+            height: 150.0,
+            decoration: new BoxDecoration(
+              color: Colors.white,
+              image: DecorationImage(
+                image:  AssetImage("graphics/stat-result-card-bg.png"),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+              boxShadow: [
+                new BoxShadow(color: Color(getColourHexFromString(primaryGrey)),
+                    offset: new Offset(2.0, 5.0),
+                    blurRadius: 7.0)
+              ]
+            ),
+            child: FixtureBoard(
+                fixtureModel,
+                assetBaseUrl,
+                true
+            ),
+          ),
+          /*Material(
             elevation: 0.25,
             borderRadius: BorderRadius.all(Radius.circular(stdBorderRadius)),
             color: Colors.white,
@@ -57,7 +80,7 @@ class TeamNextFixture extends StatelessWidget{
                   true
               ),
             ),
-          ),
+          ),*/
         ),
       ],
     );

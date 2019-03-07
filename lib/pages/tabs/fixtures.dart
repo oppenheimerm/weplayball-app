@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weplayball/pages/page_root.dart';
 import 'package:weplayball/pages/tabs/defaultTabController.dart';
-import 'package:weplayball/service/auth/auth_provider.dart';
 import 'package:weplayball/service/authenticationStatus.dart';
 import 'package:weplayball/service/request/apiRequest.dart';
 import 'package:weplayball/service/response/parsedResponse.dart';
@@ -153,7 +151,7 @@ class  _FixturesTabState  extends State<FixturesTab> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context){
 
-    print("authStatus: ${widget._authStatus.toString()}");
+    //print("authStatus: ${widget._authStatus.toString()}");
     return _buildView();
   }
 

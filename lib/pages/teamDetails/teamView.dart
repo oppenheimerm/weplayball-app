@@ -36,7 +36,9 @@ class TeamView extends StatelessWidget{
     widgetList.add(TeamNextFixture(teamData.nextMatch, assetBaseUrl));
 
     //  4. Last result
-    widgetList.add(TeamLastResult(teamData.lastResult, assetBaseUrl));
+    widgetList.add(
+        TeamLastResult(teamData.lastResult, assetBaseUrl)
+    );
 
     widgetList.add(TeamStats(teamData:teamData));
 
@@ -48,54 +50,16 @@ class TeamView extends StatelessWidget{
           stops: [0.0,1.0],
         ),
       ),
-      child: MainHeader(widgetList),
+      child: MainHeader(widgetList, context),
     );
 
-    // Rendered in order added to array
-    /*var widgetList = <Widget>[];
-    widgetList.add(TeamDetailsHeader(teamData, assetBaseUrl));
-    widgetList.add(TeamStats(teamData:teamData));
-    widgetList.add(TeamAbout(about));
-
-    //  build main layout with our standard shared main header widget
-    return MainHeader(widgetList);*/
   }
 
   bool hasAbout(String about)
   {
-    print("Team About value: ${about}");
     var result = (about == null) ? false : true;
     return result;
   }
 
-/*Widget createView(BuildContext context, TeamDetailsModel data)
-  {
-    return Scaffold(
-      body:SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            TeamDetailsHeader(teamData, assetBaseUrl),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TeamAbout(about),
-            ),
-          ],
-        ),
-      ),
-    );
-  }*/
-
-//  Go back
-//  https://github.com/sergiandreplace/flutter_planets_tutorial/tree/Lesson_6_Planets_Flutter_Planet_detail
-/*Container _getToolbar(BuildContext context) {
-    return new Container(
-      margin: new EdgeInsets.only(
-          top: MediaQuery
-              .of(context)
-              .padding
-              .top),
-      child: new BackButton(color: Colors.white),
-    );
-  }*/
 
 }

@@ -1,30 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:weplayball/models/teamDetails.dart';
+import 'package:weplayball/pages/teamDetails/headToHead.dart';
+import 'package:weplayball/ui/arcClipper.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/layout.dart';
 
-
-class TeamDetailsHeader extends StatelessWidget{
-
-  TeamDetailsHeader(this.teamDetails, this.assetBaseUrl);
+class TeamDetailsHeader extends StatefulWidget {
   final TeamDetailsModel teamDetails;
   final String assetBaseUrl;
+  TeamDetailsHeader(this.teamDetails, this.assetBaseUrl);
+  @override
+  _TeamDetailsHeaderState createState() => _TeamDetailsHeaderState();}
 
 
+class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
+
+  String _selected;
+  List<DropdownMenuItem<String>> _teamPeers =[];
+
+  void _primeTeamPeersList(){
+
+
+    _teamPeers = widget.teamDetails.peers.map((value) => DropdownMenuItem(
+      child: Text(value.teamName),
+      value: value.teamCode,
+    )).toList();
+  }
+
+  _viewHeadToHead(BuildContext context, String awayTeamCode)
+  {
+
+    setState(() {
+      _selected = awayTeamCode;
+    });
+
+    // dismiss alert dialog
+    Navigator.of(context).pop();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HeadToHead(widget.teamDetails, awayTeamCode, widget.assetBaseUrl)),
+    );
+
+  }
+
+  _displayDialog(BuildContext context)
+  {
+    //_primeTeamPeersList();
+
+    //print("Length of _teamPeers: ${_teamPeers.length}" );
+
+    return showDialog(
+      context: context,
+        builder: (context) {
+          return AlertDialog(
+            //title: Text('Dropdown Button'),
+              content: DropdownButton(
+                value: _selected,
+                items: _teamPeers,
+                onChanged: (value) => _viewHeadToHead(context, value),
+                isExpanded: false,
+                hint: Text("Select team"),
+              ),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+                child: new Text('CANCEL'),
+              )
+            ],
+          );
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    _teamPeers = [];
+    //  call our load data function
+    _primeTeamPeersList();
+
+
     return Container(
       child: Stack(
         children: <Widget>[
-          /*ClipPath(
+          ClipPath(
             clipper: ArcClipper(),
             child: Container(
-              color: Color(getColourHexFromString(primaryBlue)),
+              color: Color(getColourHexFromString(primaryDarkGrey)),
               height: 300,
             ),
-          ),*/
+          ),
           Column(
             children: <Widget>[
               SizedBox(
@@ -48,15 +116,15 @@ class TeamDetailsHeader extends StatelessWidget{
                       ),
                       Center(
                         child: _getLogo(
-                            teamDetails,
-                            assetBaseUrl
+                            widget.teamDetails,
+                            widget.assetBaseUrl
                         ),
                       ),
                       SizedBox(
                         height: 24,
                       ),
                       Text(
-                        teamDetails.teamName.toUpperCase(),
+                        widget.teamDetails.teamName.toUpperCase(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
@@ -69,7 +137,7 @@ class TeamDetailsHeader extends StatelessWidget{
                         height: 4,
                       ),
                       Text(
-                        teamDetails.teamCode.toUpperCase(),
+                        widget.teamDetails.teamCode.toUpperCase(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -81,9 +149,8 @@ class TeamDetailsHeader extends StatelessWidget{
                       SizedBox(
                         height: 24,
                       ),
-
                       Text(
-                        teamDetails.division,
+                        widget.teamDetails.division,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
@@ -112,7 +179,7 @@ class TeamDetailsHeader extends StatelessWidget{
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          _getRankColumn(teamDetails)
+                          _getRankColumn(widget.teamDetails)
                         ],
                       ),
                       SizedBox(
@@ -129,7 +196,37 @@ class TeamDetailsHeader extends StatelessWidget{
                         ),
                       ),
                       SizedBox(
-                        height: 6,
+                        height: 24,
+                      ),
+
+                      Center(
+                        child: new RaisedButton(
+                          elevation: 3.0,
+                          padding: const EdgeInsets.all(12.0),
+                          textColor: Colors.white,
+                          child: Text("Vs",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Poppins',
+                              fontSize: fontSizeH4,
+                            ),
+                          ),
+                          color: Color(getColourHexFromString(primaryBlue)),
+                          onPressed: () => _displayDialog(context),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        "VIEW TEAM HEAD TO HEAD",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Poppins',
+                          color: Color(getColourHexFromString(primaryBlack)),
+                          fontSize: fontSizeH5,
+                        ),
                       ),
 
                     ],

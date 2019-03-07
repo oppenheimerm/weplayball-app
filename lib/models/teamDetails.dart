@@ -1,3 +1,4 @@
+import 'package:weplayball/models/TeamPeer.dart';
 import 'package:weplayball/models/fixture.dart';
 import 'package:weplayball/models/result.dart';
 
@@ -31,6 +32,7 @@ class TeamDetailsModel {
   final FixtureModel nextMatch;
   final ResultModel lastResult;
   final String about;
+  final List<TeamPeer>peers;
 
   TeamDetailsModel({
     this.teamName,
@@ -61,10 +63,15 @@ class TeamDetailsModel {
     this.subDivisionCount,
     this.nextMatch,
     this.lastResult,
-    this.about
+    this.about,
+    this.peers,
   });
 
   factory TeamDetailsModel.fromJson(Map<String, dynamic> json){
+
+    var list = json['peers'] as List;
+    List<TeamPeer> peersList = list.map((i) => TeamPeer.fromJson(i)).toList();
+
     return TeamDetailsModel(
         teamName: json['teamName'],
         teamCode: json['teamCode'],
@@ -95,6 +102,8 @@ class TeamDetailsModel {
         nextMatch: FixtureModel.fromJson(json['teamNextMatch']),
         lastResult: ResultModel.fromJson(json['teamLastResult']),
         about: json['about'],
+        //['firstDivision'].map((i) => ResultModel.fromJson(i)));
+        peers:peersList
     );
   }
 

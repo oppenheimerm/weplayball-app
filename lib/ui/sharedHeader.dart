@@ -4,10 +4,10 @@ import 'package:weplayball/ui/colors.dart';
 //  Set up a standard top navigation bar and pass in an arry
 //  of body widgets (viewWidgets)
 class MainHeader extends StatelessWidget{
-  const MainHeader(this.viewWidgets, { Key key}) : super(key: key);
+  const MainHeader(this.viewWidgets, this.context, { Key key}) : super(key: key);
 
   final List<Widget> viewWidgets;
-
+  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {

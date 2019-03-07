@@ -22,7 +22,7 @@ class ResultBoard extends StatelessWidget
     return buildView(context, resultModel);
   }
 
-  _handleTap(BuildContext context,String teamCode){
+  _handleTap(BuildContext context, String teamCode){
     print("fetching datat for team: ${teamCode}") ;
     Navigator.push(
       context,
@@ -89,6 +89,7 @@ class ResultBoard extends StatelessWidget
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        addSizedBoxPadding(35.0, 0),
         Center(
           child: Text(
               score,
@@ -142,10 +143,12 @@ class ResultBoard extends StatelessWidget
           children: [
             Container(
               width: 100.0,
-              padding: const EdgeInsets.all(18.0),
+              padding: const EdgeInsets.all(4.0),
               child: Column(
                 children: <Widget>[
-                  //Center(child: CircularProgressIndicator()),
+                  SizedBox(
+                    height: 24,
+                  ),
                   Center(
                     child: Image(
                       //  flutter_advanced_networkimage 0.3.13
@@ -194,7 +197,7 @@ class ResultBoard extends StatelessWidget
             children: [
               Container(
                 width: 100.0,
-                padding: const EdgeInsets.all(18.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Column(
                   children: <Widget>[
                     //Center(child: CircularProgressIndicator()),
@@ -239,47 +242,54 @@ class ResultBoard extends StatelessWidget
   {
     if(disabledClickEvent)
     {
-      return Column(
-        children: <Widget>[
-          addSizedBoxPadding(15.0, 0),
-          Center(
-            child: Text(
-                teamCode,
+      return Container(
+        width: 110.0,
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 28,
+            ),
+            Center(
+              child: Text(
+                  teamCode,
+                  style: TextStyle(
+                    fontSize: fontSizeH2,
+                    fontWeight: FontWeight.bold,
+                    color: Color(getColourHexFromString(primaryBlack)),
+                  )
+              ),
+            ),
+            //  add some padding
+            addSizedBoxPadding(15.0, 0),
+            Center(
+              child:Text(
+                teamName,
                 style: TextStyle(
-                  fontSize: fontSizeH2,
+                  fontSize: fontSizeH5,
                   fontWeight: FontWeight.bold,
                   color: Color(getColourHexFromString(primaryBlack)),
-                )
-            ),
-          ),
-          addSizedBoxPadding(15.0, 0),
-          //  add some padding
-          addSizedBoxPadding(20.0, 0),
-          Center(
-            child:Text(
-              teamName,
-              style: TextStyle(
-                fontSize: fontSizeH5,
-                fontWeight: FontWeight.bold,
-                color: Color(getColourHexFromString(primaryBlack)),
+                ),
+                //  Truncate String and add Ellipsis after character number
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
               ),
-              //  Truncate String and add Ellipsis after character number
-              softWrap: false,
-              overflow: TextOverflow.ellipsis,
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
     else{
       return GestureDetector(
         onDoubleTap: () => _handleTap(context, teamCode),/* note () => _handleTap(teamCode) vs _handleTap(teamCode) !! */
-        child: new Container(
-          width: 100.0,
-          padding: const EdgeInsets.all(12.0),
+        child: Container(
+          width: 110.0,
+          padding: const EdgeInsets.all(4.0),
           child: Column(
             children: <Widget>[
-              addSizedBoxPadding(15.0, 0),
+              SizedBox(
+                height: 28,
+              ),
               Center(
                 child: Text(
                     teamCode,
@@ -290,9 +300,8 @@ class ResultBoard extends StatelessWidget
                     )
                 ),
               ),
-              addSizedBoxPadding(15.0, 0),
               //  add some padding
-              addSizedBoxPadding(20.0, 0),
+              addSizedBoxPadding(8.0, 0),
               Center(
                 child:Text(
                   teamName,

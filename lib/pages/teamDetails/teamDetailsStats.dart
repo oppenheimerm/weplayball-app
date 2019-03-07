@@ -22,34 +22,6 @@ class TeamStats extends StatelessWidget{
     );
   }
 
-  /*@override
-  Widget build(BuildContext context)
-  {
-    var textTheme = Theme.of(context).textTheme;
-    _buildTeamStatData();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Text(
-            'Team Stats',
-            style: textTheme.subhead.copyWith(fontSize: 18.0),
-          ),
-        ),
-        SizedBox.fromSize(
-          size: const Size.fromHeight(100.0),
-          child: ListView.builder(
-            itemCount: statCards.length,
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(top: 8.0, left: 20.0),
-            itemBuilder: _buildCards,
-          )
-        ),
-      ],
-    );
-  }*/
-
   @override
   Widget build(BuildContext context) {
 

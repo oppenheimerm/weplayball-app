@@ -88,6 +88,7 @@ class FixtureBoard extends StatelessWidget
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        addSizedBoxPadding(40.0, 0),
         Center(
           child: Text(
               formatTime(time),
@@ -231,6 +232,9 @@ class FixtureBoard extends StatelessWidget
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: 24,
+              ),
               Center(
                 child: Text(
                     teamCode,
@@ -242,7 +246,7 @@ class FixtureBoard extends StatelessWidget
                 ),
               ),
               //  add some padding
-              addSizedBoxPadding(20.0, 0),
+              addSizedBoxPadding(15.0, 0),
               Center(
                 child:Text(
                   teamName,
@@ -269,18 +273,21 @@ class FixtureBoard extends StatelessWidget
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: <Widget>[
+                    SizedBox(
+                      height: 24,
+                    ),
                     Center(
                       child: Text(
                           teamCode,
                           style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: fontSizeH2,
                             fontWeight: FontWeight.bold,
                             color: Color(getColourHexFromString(primaryBlack)),
                           )
                       ),
                     ),
                     //  add some padding
-                    addSizedBoxPadding(20.0, 0),
+                    addSizedBoxPadding(15.0, 0),
                     Center(
                       child:Text(
                         teamName,
@@ -302,7 +309,7 @@ class FixtureBoard extends StatelessWidget
   }
 
 
-  Expanded buildMiddle(DateTime time, String division)
+  /*Expanded buildMiddle(DateTime time, String division)
   {
     var middleCell = new Expanded(
       child: Column(
@@ -327,7 +334,7 @@ class FixtureBoard extends StatelessWidget
 
     return middleCell;
 
-  }
+  }*/
 
   String formatTime(DateTime time){
     var timeText;

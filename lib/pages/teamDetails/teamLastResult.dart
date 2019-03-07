@@ -45,17 +45,27 @@ class TeamLastResult extends StatelessWidget{
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Material(
-            elevation: 0.25,
-            borderRadius: BorderRadius.all(Radius.circular(stdBorderRadius)),
-            color: Colors.white,
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: ResultBoard(
-                  lastResult,
-                  assetBaseUrl,
-                  true
-              ),
+          child: Container(
+            alignment: Alignment.center,
+            //padding: new EdgeInsets.all(8.0),
+            height: 160.0,
+            decoration: new BoxDecoration(
+                color: Colors.white,
+                image: DecorationImage(
+                  image:  AssetImage("graphics/stat-result-card-bg.png"),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+                boxShadow: [
+                  new BoxShadow(color: Color(getColourHexFromString(primaryGrey)),
+                      offset: new Offset(2.0, 5.0),
+                      blurRadius: 7.0)
+                ]
+            ),
+            child: ResultBoard(
+                lastResult,
+                assetBaseUrl,
+                true
             ),
           ),
         ),

@@ -38,7 +38,7 @@ class SharedTabController extends StatelessWidget  {
               color: Color(getColourHexFromString(primaryBlack))),
           centerTitle: true,
           elevation: 0.025,
-          backgroundColor: Color(getColourHexFromString(primaryWhiteGrey)),
+          backgroundColor: Color(getColourHexFromString(primaryBlue)),
 
         ),
         body: TabBarView(

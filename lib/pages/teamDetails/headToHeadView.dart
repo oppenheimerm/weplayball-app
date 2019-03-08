@@ -9,7 +9,7 @@ import 'package:weplayball/ui/sharedHeader.dart';
 
 class HeadToHeadView extends StatelessWidget{
 
-  const HeadToHeadView(this.homeTeamData, this.awayTeamData, this.assetBaseUrl,{ Key key}) : super(key: key);
+  HeadToHeadView(this.homeTeamData, this.awayTeamData, this.assetBaseUrl,{ Key key}) : super(key: key);
 
   final TeamDetailsModel homeTeamData;
   final TeamDetailsModel awayTeamData;
@@ -29,6 +29,8 @@ class HeadToHeadView extends StatelessWidget{
         height: 24,
       ),
     );
+
+
     widgetList.add(
         _buildTitleRow(
           homeTeamData,
@@ -36,9 +38,15 @@ class HeadToHeadView extends StatelessWidget{
         )
     );
 
-    widgetList.add(
-        buildStatRow(homeTeamData, awayTeamData, "Stat Title")
-    );
+    //  _buildStatListView
+    //  our head to head stat data
+    var statData = _buildHeadToHeadStats().toList();
+
+    statData.forEach((item) => {
+      widgetList.add(
+        buildStatRow(item.homeTeamStatValue,item.awayTeamStatValue, item.statTitle)
+      )
+    });
 
 
 
@@ -52,6 +60,7 @@ class HeadToHeadView extends StatelessWidget{
       ),
       child: MainHeader(widgetList, context),
     );
+
   }
 
   Container _buildHead(){
@@ -61,7 +70,7 @@ class HeadToHeadView extends StatelessWidget{
           ClipPath(
             clipper: ArcClipper(),
             child: Container(
-              color: Color(getColourHexFromString(primaryDarkGrey)),
+              color: Color(getColourHexFromString(primaryLightGrey)),
               height: 300,
             ),
           ),
@@ -135,7 +144,6 @@ class HeadToHeadView extends StatelessWidget{
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w300,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH2,
                         ),
@@ -169,7 +177,6 @@ class HeadToHeadView extends StatelessWidget{
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w300,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
                         ),
@@ -326,13 +333,13 @@ class HeadToHeadView extends StatelessWidget{
     );
   }
 
-  //  just testing design here
-  Container buildStatRow(TeamDetailsModel teamHome, TeamDetailsModel teamAway, String statTitle){
+  //  Should be able to remove
+  Container buildStatRow(String homeTeamValue, String awayTeamValue, String statTitle){
     return Container(
       alignment: Alignment.centerLeft,
       margin: new EdgeInsets.all(8.0),
       padding: new EdgeInsets.all(8.0),
-      height: 150.0,
+      height: 120.0,
       decoration: new BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
@@ -341,7 +348,7 @@ class HeadToHeadView extends StatelessWidget{
           ),
           borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
           boxShadow: [
-            new BoxShadow(color: Color(getColourHexFromString(primaryGrey)),
+            new BoxShadow(color: Color(getColourHexFromString(primaryMediumGrey)),
                 offset: new Offset(2.0, 5.0),
               blurRadius: 7.0)
           ]
@@ -351,18 +358,18 @@ class HeadToHeadView extends StatelessWidget{
           Expanded(
             child: buildStatCell(
               CrossAxisAlignment.start,
-              teamHome.wPyth,
+                homeTeamValue
             ),
           ),
           Expanded(
               child: buildStatDetailCell(
-                "wPyth"
+                  statTitle
               ),
           ),
           Expanded(
             child: buildStatCell(
               CrossAxisAlignment.start,
-              teamAway.wPyth,
+              awayTeamValue,
             ),
           ),
         ],
@@ -418,14 +425,17 @@ class HeadToHeadView extends StatelessWidget{
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Center(
-          child: Text(
-              statTitle,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: fontSizeH4,
-                fontWeight: FontWeight.bold,
-                color: Color(getColourHexFromString(primaryBlack)),
-              )
+          child: Padding(
+            padding: const EdgeInsets.only(top:32.0),
+            child: Text(
+                statTitle,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: fontSizeH4,
+                  fontWeight: FontWeight.w300,
+                  color: Color(getColourHexFromString(primaryBlack)),
+                )
+            ),
           ),
         ),
       ],
@@ -433,6 +443,159 @@ class HeadToHeadView extends StatelessWidget{
   }
 
 
+  List<StatDataRow> _buildHeadToHeadStats()
+  {
+    List<StatDataRow> headToHeadStats = new List();
+
+    //  W%
+    StatDataRow _buildTeamWinPercent()
+    {
+      var teamStatModel = new StatDataRow(
+          homeTeamData.winPercentage,
+          awayTeamData.winPercentage,
+          "Win Percent"
+      );
+      return teamStatModel;
+    }
+    var winPercent = _buildTeamWinPercent();
+    headToHeadStats.add(winPercent);
+
+    StatDataRow _buildTeamLossPercent()
+    {
+      var teamStatModel = new StatDataRow(
+          homeTeamData.lossPercentage,
+          awayTeamData.lossPercentage,
+          "Loss Percent"
+      );
+      return teamStatModel;
+    }
+    var lossPercent = _buildTeamLossPercent();
+    headToHeadStats.add(lossPercent);
+
+    StatDataRow _buildTeamBasketsPerGame()
+    {
+      var teamStatModel = new StatDataRow(
+          homeTeamData.basketsPerGame,
+          awayTeamData.basketsPerGame,
+          "Baskets Per Game"
+      );
+      return teamStatModel;
+    }
+    var bpg = _buildTeamBasketsPerGame();
+    headToHeadStats.add(bpg);
+
+    StatDataRow _buildTeamWinLossPercent()
+    {
+        var teamStatModel = new StatDataRow(
+          homeTeamData.winLossPercent,
+          awayTeamData.winLossPercent,
+          "Win / Loss Percent"
+        );
+        return teamStatModel;
+    }
+    var winlosspercent = _buildTeamWinLossPercent();
+    headToHeadStats.add(winlosspercent);
+
+    StatDataRow _buildWinOver500()
+    {
+      var teamStatModel = new StatDataRow(
+        homeTeamData.winsOver500,
+        awayTeamData.winsOver500,
+        "Wins over .500"
+      );
+      return teamStatModel;
+    }
+    var winsOver500 = _buildWinOver500();
+    headToHeadStats.add(winsOver500);
+
+    StatDataRow _buildTeamWPyth()
+    {
+      var teamStaModel = new StatDataRow(
+          homeTeamData.wPyth,
+          awayTeamData.wPyth,
+          "Pythagorean Wins"
+      );
+      return teamStaModel;
+    }
+    var wypth = _buildTeamWPyth();
+    headToHeadStats.add(wypth);
+
+    StatDataRow _buildTeamBasketsFor(){
+      var teamStatModel = new StatDataRow(
+        homeTeamData.basketsFor.toString(),
+        awayTeamData.basketsFor.toString(),
+        "Baskers For"
+      );
+      return teamStatModel;
+    }
+    var bf = _buildTeamBasketsFor();
+    headToHeadStats.add(bf);
+
+    StatDataRow _buildTeamBasketsAganist(){
+      var teamStatModel = new StatDataRow(
+        homeTeamData.basketsAgainst.toString(),
+        awayTeamData.basketsAgainst.toString(),
+        "Basktes Aganist"
+      );
+
+      return teamStatModel;
+    }
+    var ba = _buildTeamBasketsAganist();
+    headToHeadStats.add(ba);
+
+    StatDataRow _buildTeamGameWon(){
+      var teamStatModel = new StatDataRow(
+        homeTeamData.gamesWon.toString(),
+        awayTeamData.gamesWon.toString(),
+        "Games Won"
+      );
+      return teamStatModel;
+    }
+    var gw = _buildTeamGameWon();
+    headToHeadStats.add(gw);
+
+    StatDataRow _gamesLost(){
+      var teamStatModel = new StatDataRow(
+        homeTeamData.gamesLost.toString(),
+        awayTeamData.gamesLost.toString(),
+        "Games Lost"
+      );
+      return teamStatModel;
+    }
+    var gl = _gamesLost();
+    headToHeadStats.add(gl);
+
+    StatDataRow _buildTeamGamesPlayed(){
+      var teamStatModel = new StatDataRow(
+        homeTeamData.gamesPlayed.toString(),
+        awayTeamData.gamesPlayed.toString(),
+        "Games Plaed"
+      );
+      return teamStatModel;
+    }
+    var gp = _buildTeamGamesPlayed();
+    headToHeadStats.add(gp);
+
+
+
+    //  return list
+    return headToHeadStats;
+  }
+
+
+}
+
+
+
+class StatDataRow{
+  final String homeTeamStatValue;
+  final String awayTeamStatValue;
+  final String statTitle;
+
+  StatDataRow(
+      this.homeTeamStatValue,
+      this.awayTeamStatValue,
+      this.statTitle);
 }
 
 

@@ -47,9 +47,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
 
   _displayDialog(BuildContext context)
   {
-    //_primeTeamPeersList();
-
-    //print("Length of _teamPeers: ${_teamPeers.length}" );
 
     return showDialog(
       context: context,
@@ -89,7 +86,7 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
           ClipPath(
             clipper: ArcClipper(),
             child: Container(
-              color: Color(getColourHexFromString(primaryDarkGrey)),
+              color: Color(getColourHexFromString(primaryLightGrey)),
               height: 300,
             ),
           ),
@@ -128,7 +125,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH4,
                         ),
@@ -141,7 +137,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
                         ),
@@ -154,7 +149,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH4,
                         ),
@@ -167,7 +161,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
                         ),
@@ -190,7 +183,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
                         ),
@@ -207,23 +199,24 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
                           child: Text("Vs",
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
-                              fontFamily: 'Poppins',
                               fontSize: fontSizeH4,
                             ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: stdButtonBorderRadius,
                           ),
                           color: Color(getColourHexFromString(primaryBlue)),
                           onPressed: () => _displayDialog(context),
                         ),
                       ),
                       SizedBox(
-                        height: 4,
+                        height: 6.0,
                       ),
                       Text(
                         "VIEW TEAM HEAD TO HEAD",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
                           color: Color(getColourHexFromString(primaryBlack)),
                           fontSize: fontSizeH5,
                         ),
@@ -331,7 +324,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
               teamDetails.rank.toString(),
               style: TextStyle(
               fontWeight: FontWeight.w900,
-              fontFamily: 'Poppins',
               color: Color(getColourHexFromString(primaryBlack)),
               fontSize: fontSizeH1,
               ),
@@ -341,7 +333,6 @@ class _TeamDetailsHeaderState extends State<TeamDetailsHeader>{
               child: Text("of ${teamDetails.subDivisionCount.toString()}",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins',
                     color: Color(getColourHexFromString(primaryBlack)),
                     fontSize: fontSizeH5,
                   )

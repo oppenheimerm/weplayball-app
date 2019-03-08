@@ -40,7 +40,7 @@ class TeamView extends StatelessWidget{
         TeamLastResult(teamData.lastResult, assetBaseUrl)
     );
 
-    widgetList.add(TeamStats(teamData:teamData));
+    widgetList.add(TeamStats(teamData));
 
     return Container(
       decoration: BoxDecoration(

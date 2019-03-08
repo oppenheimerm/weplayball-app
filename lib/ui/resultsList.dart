@@ -73,7 +73,7 @@ class ResultsList extends StatelessWidget {
                   ),
                   borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
                   boxShadow: [
-                    new BoxShadow(color: Color(getColourHexFromString(primaryGrey)),
+                    new BoxShadow(color: Color(getColourHexFromString(primaryMediumGrey)),
                         offset: new Offset(2.0, 5.0),
                         blurRadius: 7.0)
                   ]

@@ -22,7 +22,6 @@ class  _FixturesTabState  extends State<FixturesTab> with SingleTickerProviderSt
 {
   TabController _tabController;
   var _apiRequest = new ApiRequest();
-  //static var _assetBaseUrl = "https://weplayball.azurewebsites.net";
   static ParsedResponse<FixtureCollection> fixtureData;
   List<Widget> _screens;
 
@@ -45,21 +44,6 @@ class  _FixturesTabState  extends State<FixturesTab> with SingleTickerProviderSt
     super.dispose();
   }
 
-  //  Called when a dependency of this State object changes
-  //  see: https://docs.flutter.io/flutter/widgets/SingleTickerProviderStateMixin/didChangeDependencies.html
-  /*@override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    var auth = AuthProvider.of(context).auth;
-    auth.currentUser().then((user) {
-      print("didChangeDependencies() called");
-      setState(() {
-        authStatus = (user.userId.toString().isEmpty) ? AuthStatus.notSignedIn : AuthStatus.signedIn;
-      });
-    });
-  }*/
-
-
   updateDataState()
   {
     var tab1 =
@@ -74,7 +58,7 @@ class  _FixturesTabState  extends State<FixturesTab> with SingleTickerProviderSt
         )
     ),
     ) :
-    new FixturesList(fixtureData:fixtureData.body.firstDivision, assetBaseUrl:widget._assetBaseUrl);
+    new FixturesList(fixtureData.body.firstDivision, widget._assetBaseUrl);
 
     var tab2 =
     (fixtureData.body.secondDivision.length == 0)?
@@ -88,7 +72,7 @@ class  _FixturesTabState  extends State<FixturesTab> with SingleTickerProviderSt
         )
     ),
     ) :
-    new FixturesList(fixtureData:fixtureData.body.secondDivision, assetBaseUrl:widget._assetBaseUrl);
+    new FixturesList(fixtureData.body.secondDivision, widget._assetBaseUrl);
 
     var tab3 =
     (fixtureData.body.thirdDivision.length == 0)?
@@ -102,7 +86,7 @@ class  _FixturesTabState  extends State<FixturesTab> with SingleTickerProviderSt
         )
     )
     ) :
-    new FixturesList(fixtureData:fixtureData.body.thirdDivision, assetBaseUrl:widget._assetBaseUrl);
+    new FixturesList(fixtureData.body.thirdDivision, widget._assetBaseUrl);
 
     _screens = [
       tab1,tab2,tab3
@@ -168,41 +152,6 @@ class  _FixturesTabState  extends State<FixturesTab> with SingleTickerProviderSt
 
     return SharedTabController(tabs,_tabController, _screens);
 
-    //  https://github.com/flutter/flutter/issues/17459
-    /*return new DefaultTabController(
-      length: _screens.length,
-      child: new Scaffold(
-        appBar: new AppBar(
-          //  https://github.com/flutter/flutter/issues/17459
-          flexibleSpace: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              new TabBar(
-                tabs: [
-                  new Tab(text: "DIV 1"),
-                  new Tab(text: "DIV 2"),
-                  new Tab(text: "DIV 3")
-                ],
-                indicatorColor: Color(getColourHexFromString(primaryBlue)),
-                isScrollable: true,
-                controller: _tabController,
-                labelColor: Color(getColourHexFromString(primaryBlack)),
-              ),
-            ],
-          ),
-          iconTheme: new IconThemeData(
-              color: Color(getColourHexFromString(primaryBlack))),
-          centerTitle: true,
-          elevation: 0.025,
-          backgroundColor: Color(getColourHexFromString(primaryWhiteGrey)),
-
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: _screens,
-        ),
-      ),
-    );*/
   }
 
 }

@@ -9,15 +9,17 @@ const kSecondaryDark = const Color(0xFF009faf);*/
 
 const String primaryOrange = "#f66669";
 const String primaryBlack = "#101017";
-const String primaryLightGrey = "#fcfcfc";
-const String primaryGrey = "#efeded";
-const String primaryDarkGrey = "#4A4A4A";
+const String primaryLightGrey = "#E1E2E4";
+const String primaryMediumGrey = "#E1E2E4";
+const String primaryDarkGrey = "#C8C9CA";
 const String primaryBlue = "#a3d4e7";
 //  background colour
 const String primaryWhiteGrey = "#f2f3f3";
 
-Color gradientStart = Color(getColourHexFromString("#FCFCFC"));
-Color gradientEnd = Color(getColourHexFromString(primaryBlue));
+//EEEFF1
+//#E1E2E4
+Color gradientStart = Color(getColourHexFromString("#FFFFFF"));
+Color gradientEnd = Color(getColourHexFromString(primaryLightGrey));
 
 int getColourHexFromString(String colourString)
 {

@@ -23,3 +23,5 @@ var fontSizeH5 = 12.0;
 var stdElevation = 0.75;
 
 var stdBorderRadius = 15.0;
+
+var stdButtonBorderRadius = BorderRadius.circular(20.0);

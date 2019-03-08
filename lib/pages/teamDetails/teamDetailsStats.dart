@@ -8,7 +8,7 @@ import 'package:weplayball/ui/statSummary.dart';
 //  Scrollable widget
 class TeamStats extends StatelessWidget{
 
-  TeamStats({ Key key, this.teamData}) : super(key: key);
+  TeamStats(this.teamData, { Key key }) : super(key: key);
 
   TeamDetailsModel teamData;
   List<TeamStatModel> statCards;

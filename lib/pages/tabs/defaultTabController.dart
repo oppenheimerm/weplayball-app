@@ -14,8 +14,6 @@ class SharedTabController extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
 
-    //return new DefaultTabController(length: null, child: null);
-
     //  https://github.com/flutter/flutter/issues/17459
     return new DefaultTabController(
       length: _tabs.length,
@@ -35,10 +33,11 @@ class SharedTabController extends StatelessWidget  {
             ],
           ),
           iconTheme: new IconThemeData(
-              color: Color(getColourHexFromString(primaryBlack))),
+              color: Color(getColourHexFromString(primaryBlack))
+          ),
           centerTitle: true,
-          elevation: 0.025,
-          backgroundColor: Color(getColourHexFromString(primaryBlue)),
+          elevation: 0.25,
+          backgroundColor: Colors.white,
 
         ),
         body: TabBarView(

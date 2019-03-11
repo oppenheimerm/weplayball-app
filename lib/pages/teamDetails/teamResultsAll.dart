@@ -1,29 +1,32 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:weplayball/models/result.dart';
+import 'package:weplayball/pages/teamDetails/TeamResultsAllView.dart';
 import 'package:weplayball/service/request/apiRequest.dart';
-import 'package:weplayball/models/teamDetails.dart';
 import 'package:weplayball/service/response/parsedResponse.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/layout.dart';
-import 'package:weplayball/pages/teamDetails/teamView.dart';
 
-class TeamDetailsPage extends StatefulWidget {
-  final String teamCode;
-  final String assetBaseUrl;
-  const TeamDetailsPage(this.teamCode, this.assetBaseUrl,{ Key key }) : super(key: key);
+class TeamResultsAll extends StatefulWidget{
+
+  final String _homeTeamCode;
+  final String _assetBaseUrl;
+
+  TeamResultsAll(this._homeTeamCode, this._assetBaseUrl,{ Key key }) : super(key: key);
+
   @override
-  _TeamDetailsPageState createState() => _TeamDetailsPageState();
+  _TeamResultsAllState createState() => _TeamResultsAllState();
 }
 
-class _TeamDetailsPageState extends State<TeamDetailsPage>
-{
+class _TeamResultsAllState extends State<TeamResultsAll>{
+
   var _apiRequest = new ApiRequest();
-  static ParsedResponse<TeamDetailsModel> _teamData;
+  static ParsedResponse<List<ResultModel>> resultData;
   Widget _screen;
 
-
   Future updateAndGetData() async {
-    var data = await _apiRequest.getTeamDetails(widget.teamCode);
+    var data = await _apiRequest.getTeamResults(widget._homeTeamCode);
     return data;
   }
 
@@ -33,12 +36,12 @@ class _TeamDetailsPageState extends State<TeamDetailsPage>
     );
   }
 
-  Widget updateDataState()
-  {
-    var view = (_teamData.body == null)?
+  updateDataState(){
+    var view =
+    (resultData.body.length == 0)?
     Center(child:
     Text(
-        'Could not retreview data for team',
+        'No upcomming matches',
         style: TextStyle(
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
@@ -46,14 +49,13 @@ class _TeamDetailsPageState extends State<TeamDetailsPage>
         )
     ),
     ) :
-    new TeamView(_teamData.body, widget.assetBaseUrl);
+    new TeamResultsAllView(resultData.body, widget._assetBaseUrl);
 
     return view;
   }
 
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     _screen = Center(child: new CircularProgressIndicator());
 
     return new Container(
@@ -85,7 +87,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage>
                 );
 
               } else {
-                _teamData = snapshot.data;
+                resultData = snapshot.data;
                 //return Center(child: Text('team: ${_teamData.body.teamName}'));
                 return buildView(context, snapshot );
               }
@@ -97,7 +99,7 @@ class _TeamDetailsPageState extends State<TeamDetailsPage>
 
   Widget buildView(BuildContext context, AsyncSnapshot snapshot){
     var page = updateDataState();
-
     return page;
+
   }
 }

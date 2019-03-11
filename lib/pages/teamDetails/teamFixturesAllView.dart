@@ -1,40 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:weplayball/models/fixture.dart';
-import 'package:weplayball/pages/teamDetails/teamDetails.dart';
-
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/fixtureBoard.dart';
 import 'package:weplayball/ui/layout.dart';
+import 'package:weplayball/ui/sharedHeader.dart';
 
 
-class FixturesList extends StatelessWidget {
+class TeamFixturesAllView extends StatelessWidget{
+  TeamFixturesAllView(this.fixtures, this.assetBaseUrl, {Key key}) : super(key: key);
 
-  final List<FixtureModel> fixtureData;
+  final List<FixtureModel> fixtures;
   final String assetBaseUrl;
-
-  const FixturesList(
-  this.fixtureData,
-  this.assetBaseUrl, { Key key }) : super(key: key);
-
-  _handleTap(BuildContext context,String teamCode){
-    print("fetching datat for team: ${teamCode}") ;
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => TeamDetailsPage(teamCode, assetBaseUrl)),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return createListView(context, fixtureData );
+
+    var container = buildListView(context, fixtures);
+
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: new LinearGradient(colors: [gradientStart, gradientEnd],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0.0,1.0],
+        ),
+      ),
+      child: MainHeader(null, context, true, container),
+    );
+
   }
 
-  Widget createListView(BuildContext context, List<FixtureModel> fixtureData) {
-
-    //print(snapshot.hasData);
-    //  wrap in container to give background color
+  Container buildListView(BuildContext context, List<FixtureModel> fixtures)
+  {
     return Container(
       decoration: BoxDecoration(
         gradient: new LinearGradient(colors: [gradientStart, gradientEnd],
@@ -45,7 +43,7 @@ class FixturesList extends StatelessWidget {
       ),
       child: ListView.separated(
         padding: EdgeInsets.all(8.0),
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (BuildContext context, int index){
           return new Column(
             children: <Widget>[
               SizedBox(
@@ -69,7 +67,7 @@ class FixturesList extends StatelessWidget {
                     ]
                 ),
                 child: FixtureBoard(
-                    fixtureData[index],
+                    fixtures[index],
                     assetBaseUrl,
                     false
                 ),
@@ -83,10 +81,11 @@ class FixturesList extends StatelessWidget {
           height: 1.0,
           color: Color(getColourHexFromString(primaryWhiteGrey)),
         ),
-        itemCount: fixtureData.length,
+        itemCount: fixtures.length,
       ),
     );
 
   }
+
 
 }

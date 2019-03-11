@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weplayball/models/result.dart';
+import 'package:weplayball/pages/teamDetails/teamResultsAll.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/layout.dart';
 import 'package:weplayball/ui/resultBoard.dart';
@@ -8,18 +9,28 @@ class TeamLastResult extends StatelessWidget{
 
   final ResultModel lastResult;
   final String assetBaseUrl;
+  final String homeTeamCode;
 
   TeamLastResult(
       this.lastResult,
-      this.assetBaseUrl
+      this.homeTeamCode,
+      this.assetBaseUrl,
       );
+
+  void _handleTap(BuildContext context, String teamCode){
+    print("fetching upcomming matches for: $teamCode") ;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TeamResultsAll(teamCode, assetBaseUrl)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return _buildView();
+    return _buildView(context);
   }
 
-  Column _buildView()
+  Column _buildView(BuildContext context)
   {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +80,27 @@ class TeamLastResult extends StatelessWidget{
             ),
           ),
         ),
+        SizedBox(
+          height: 8.0,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: InkWell(
+            onTap: () => _handleTap(context, homeTeamCode),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "View All",
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  color: Color(getColourHexFromString(primaryBlue)),
+                  fontSize: fontSizeH4,
+                ),
+              ),
+            ),
+          ),
+        )
       ],
     );
 

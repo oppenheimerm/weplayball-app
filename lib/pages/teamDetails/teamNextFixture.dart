@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weplayball/models/fixture.dart';
+import 'package:weplayball/pages/teamDetails/teamFixturesAll.dart';
 import 'package:weplayball/ui/colors.dart';
 import 'package:weplayball/ui/fixtureBoard.dart';
 import 'package:weplayball/ui/layout.dart';
@@ -8,18 +9,29 @@ class TeamNextFixture extends StatelessWidget{
 
   final FixtureModel fixtureModel;
   final String assetBaseUrl;
+  final String homeTeamCode;
 
   TeamNextFixture(
       this.fixtureModel,
+      this.homeTeamCode,
       this.assetBaseUrl
       );
 
   @override
   Widget build(BuildContext context) {
-    return _buildView();
+    return _buildView(context);
   }
 
-  Column _buildView()
+
+  void _handleTap(BuildContext context, String teamCode){
+    print("fetching upcomming matches for: $teamCode") ;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TeamFixturesAll(teamCode, assetBaseUrl)),
+    );
+  }
+
+  Column _buildView(BuildContext context)
   {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +46,6 @@ class TeamNextFixture extends StatelessWidget{
             textAlign: TextAlign.left,
             style: TextStyle(
               fontWeight: FontWeight.w900,
-              fontFamily: 'Poppins',
               color: Color(getColourHexFromString(primaryBlack)),
               fontSize: fontSizeH4,
             ),
@@ -68,20 +79,28 @@ class TeamNextFixture extends StatelessWidget{
                 true
             ),
           ),
-          /*Material(
-            elevation: 0.25,
-            borderRadius: BorderRadius.all(Radius.circular(stdBorderRadius)),
-            color: Colors.white,
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: FixtureBoard(
-                  fixtureModel,
-                  assetBaseUrl,
-                  true
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: InkWell(
+            onTap: () => _handleTap(context, homeTeamCode),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "View All",
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  color: Color(getColourHexFromString(primaryBlue)),
+                  fontSize: fontSizeH4,
+                ),
               ),
             ),
-          ),*/
-        ),
+          ),
+        )
       ],
     );
 

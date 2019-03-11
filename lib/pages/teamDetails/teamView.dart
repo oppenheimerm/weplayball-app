@@ -10,7 +10,7 @@ import 'package:weplayball/pages/teamDetails/teamDetailsStats.dart';
 
 
 class TeamView extends StatelessWidget{
-  const TeamView({ Key key, this.teamData, this.assetBaseUrl}) : super(key: key);
+  TeamView(this.teamData, this.assetBaseUrl, {Key key}) : super(key: key);
 
   final TeamDetailsModel teamData;
   final String assetBaseUrl;
@@ -33,11 +33,11 @@ class TeamView extends StatelessWidget{
 
 
     //  3. Next fixture
-    widgetList.add(TeamNextFixture(teamData.nextMatch, assetBaseUrl));
+    widgetList.add(TeamNextFixture(teamData.nextMatch, teamData.teamCode, assetBaseUrl));
 
     //  4. Last result
     widgetList.add(
-        TeamLastResult(teamData.lastResult, assetBaseUrl)
+        TeamLastResult(teamData.lastResult, teamData.teamCode, assetBaseUrl)
     );
 
     widgetList.add(TeamStats(teamData));
@@ -50,7 +50,7 @@ class TeamView extends StatelessWidget{
           stops: [0.0,1.0],
         ),
       ),
-      child: MainHeader(widgetList, context),
+      child: MainHeader(widgetList, context, false, null),
     );
 
   }

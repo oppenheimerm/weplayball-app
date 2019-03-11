@@ -58,7 +58,7 @@ class HeadToHeadView extends StatelessWidget{
           stops: [0.0,1.0],
         ),
       ),
-      child: MainHeader(widgetList, context),
+      child: MainHeader(widgetList, context, false, null),
     );
 
   }

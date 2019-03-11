@@ -21,6 +21,8 @@ abstract class BaseApiRequest {
   Future<ParsedResponse<ResultCollection>> getResults();
   Future<ParsedResponse<TeamDetailsModel>> getTeamDetails(String teamCode);
   Future<ParsedResponse<List<StandingsModel>>> getTeamStandings();
+  Future<ParsedResponse<List<FixtureModel>>> getTeamFixtures(String teamCode);
+  Future<ParsedResponse<List<ResultModel>>> getTeamResults(String teamCode);
 }
 
 class ApiRequest implements BaseApiRequest {
@@ -203,5 +205,63 @@ class ApiRequest implements BaseApiRequest {
     List<StandingsModel> standings = new List<StandingsModel>.from(parsed.map((i) => StandingsModel.fromJson(i)));
 
     return new ParsedResponse(response.statusCode, standings);
+  }
+
+  Future<ParsedResponse<List<FixtureModel>>> getTeamFixtures(String teamCode) async {
+    final url = "$baseUrl/fixtures/$teamCode";
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var token = await preferences.get("LastToken");
+
+    //http request, catching error like no internet connection.
+    //If no internet is available for example response is
+    http.Response response = await http.get(
+      url,
+      // Send authorization headers to your backend
+      headers: {HttpHeaders.authorizationHeader: 'bearer $token'},
+    ).catchError((resp) {});
+
+    if (response == null) {
+      return new ParsedResponse(NO_INTERNET, null);
+    }
+
+    //If there was an error return an empty list
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      return new ParsedResponse(response.statusCode, null);
+    }
+
+    var parsed = json.decode(response.body);
+    List<FixtureModel> fixtures = new List<FixtureModel>.from(parsed.map((i) => FixtureModel.fromJson(i)));
+
+    return new ParsedResponse(response.statusCode, fixtures);
+  }
+
+  Future<ParsedResponse<List<ResultModel>>> getTeamResults(String teamCode) async {
+    final url = "$baseUrl/results/$teamCode";
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var token = await preferences.get("LastToken");
+
+    //http request, catching error like no internet connection.
+    //If no internet is available for example response is
+    http.Response response = await http.get(
+      url,
+      // Send authorization headers to your backend
+      headers: {HttpHeaders.authorizationHeader: 'bearer $token'},
+    ).catchError((resp) {});
+
+    if (response == null) {
+      return new ParsedResponse(NO_INTERNET, null);
+    }
+
+    //If there was an error return an empty list
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      return new ParsedResponse(response.statusCode, null);
+    }
+
+    var parsed = json.decode(response.body);
+    List<ResultModel> fixtures = new List<ResultModel>.from(parsed.map((i) => ResultModel.fromJson(i)));
+
+    return new ParsedResponse(response.statusCode, fixtures);
   }
 }

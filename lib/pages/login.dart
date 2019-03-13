@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weplayball/pages/main.dart';
 import 'package:weplayball/service/auth/auth_provider.dart';
 import 'package:weplayball/service/authenticationStatus.dart';
 import 'package:weplayball/ui/colors.dart';
@@ -19,9 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   AuthStatus authStatus = AuthStatus.notSignedIn;
 
+
   String _username;
   String _password;
   var _userNameMinLength = 5;
+  var formHasErrors = false;
+  var loading = false;
+
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -33,20 +36,57 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void validateAndSubmit() async {
-    print('validateAndSubmit() called');
+    _resetLoginError();
+    _showLoader();
     if (validateAndSave()) {
       try {
 
         var auth = AuthProvider.of(context).auth;
         var user = await auth.requestLoginAPI(_username, _password);
-        print('Signed in as: ${user.body.userName}');
-        widget.onSignedIn();
+
+        if(user.statusCode == 200)
+          {
+            print('Signed in as: ${user.body.userName}');
+            widget.onSignedIn();
+          }
+          else if(user.statusCode == 404)
+          {
+            _resetLoader();
+            _showLoginError();
+          }
+           else{
+          _resetLoader();
+          _showLoginError();
+        }
       } catch (e) {
         print('Error: $e');
       }
     }
   }
 
+  void _showLoginError(){
+    setState(() {
+      formHasErrors = true;
+    });
+  }
+
+  void _resetLoginError(){
+    setState(() {
+      formHasErrors = false;
+    });
+  }
+
+  void _showLoader(){
+    setState(() {
+      loading = true;
+    });
+  }
+
+  void _resetLoader(){
+    setState(() {
+      loading = false;
+    });
+  }
 
 
   String validateName(String stringVal, int minLength, String fieldName) {
@@ -158,13 +198,37 @@ class _LoginPageState extends State<LoginPage> {
                               onSaved: (value) => _password = value,
                             ),
                             addSizedBoxPadding(16.0, 0),
+
+
+
                             Container(
+                              height: 40.0,
+                              child: RaisedButton(
+                                elevation: 3.0,
+                                padding: const EdgeInsets.all(12.0),
+                                textColor: Colors.white,
+                                child: Text("LOGIN",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: fontSizeH4,
+                                  ),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: stdButtonBorderRadius,
+                                ),
+                                color: Color(getColourHexFromString(primaryBlue)),
+                                onPressed: validateAndSubmit,
+                              ),
+                            ),
+
+
+                            /*Container(
                               height: 40.0,
                               child: Material(
                                 borderRadius: BorderRadius.circular(20.0),
                                 shadowColor: Color(getColourHexFromString(primaryDarkGrey)),
                                 color: Color(getColourHexFromString(primaryBlue)),
-                                elevation: 0.65,
+                                elevation: 5.0,
                                 child: GestureDetector(
                                   onTap: validateAndSubmit,
                                   behavior:  HitTestBehavior.deferToChild,
@@ -180,7 +244,35 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
+                            )*/
+
+                            addSizedBoxPadding(16.0, 0),
+                            Container(
+                              child: formHasErrors ?
+                              Center(
+                                child: Text(
+                                  'Username or password was incorrect.',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: stdFontFamily,
+                                    fontSize: fontSizeH4,
+                                  ),
+                                ),
+                              ) :
+                              Center(),
                             ),
+
+                            //  Loading
+                            addSizedBoxPadding(16.0, 0),
+                            Center(
+                              child: loading? new CircularProgressIndicator()
+                              : Center(),
+                            ),
+
+
+
+
                           ],
                         ),
                       ),
@@ -195,238 +287,5 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-
-
-
-    /*return SingleChildScrollView(
-      child:ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 110.0, 0.0, 0.0),
-                    child: Text(
-                        "Hello",
-                        style: TextStyle(
-                          fontSize: 80.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(getColourHexFromString(primaryBlack)),
-                        )
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
-                    child: Text(
-                        "There",
-                        style: TextStyle(
-                          fontSize: 80.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(getColourHexFromString(primaryBlack)),
-                        )
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(225.0, 175.0, 0.0, 0.0),
-                    child: Text(
-                        ".",
-                        style: TextStyle(
-                          fontSize: 80.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(getColourHexFromString(primaryBlue)),
-                        )
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child:SingleChildScrollView(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(),
-                        child: Form(
-                          //  Set the form key:
-                          key: formKey,
-                          child: Column(
-                            //  Require all children to fill the cross axis
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'USERNAME',
-                                  labelStyle: TextStyle(
-                                    fontFamily: stdFontFamily,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(getColourHexFromString(primaryDarkGrey)),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Color(getColourHexFromString(primaryBlue))),
-                                  ),
-                                ),
-                                validator: validateUsername,
-                                onSaved: (value) => _username = value,
-                              ),
-                              //  add some padding
-                              addSizedBoxPadding(16.0, 0),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'PASSWORD',
-                                  labelStyle: TextStyle(
-                                    fontFamily: stdFontFamily,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(getColourHexFromString(primaryDarkGrey)),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Color(getColourHexFromString(primaryBlue))),
-                                  ),
-                                ),
-                                obscureText: true,
-                                validator: (value) => value.isEmpty ? 'Password required' : null,
-                                onSaved: (value) => _password = value,
-                              ),
-                              addSizedBoxPadding(16.0, 0),
-                              RaisedButton(
-                                child: Text(
-                                    'Sumbit',
-                                    style: TextStyle(fontSize: 20.0)
-                                ),
-                                onPressed: validateAndSubmit,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );*/
-
-
-
-    /*return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(16.0, 110.0, 0.0, 0.0),
-                  child: Text(
-                      "Hello",
-                      style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(getColourHexFromString(primaryBlack)),
-                      )
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
-                  child: Text(
-                      "There",
-                      style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(getColourHexFromString(primaryBlack)),
-                      )
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(225.0, 175.0, 0.0, 0.0),
-                  child: Text(
-                      ".",
-                      style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(getColourHexFromString(primaryBlue)),
-                      )
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  child:SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(),
-                      child: Form(
-                        //  Set the form key:
-                        key: formKey,
-                        child: Column(
-                          //  Require all children to fill the cross axis
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  labelText: 'USERNAME',
-                                labelStyle: TextStyle(
-                                  fontFamily: stdFontFamily,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(getColourHexFromString(primaryDarkGrey)),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color(getColourHexFromString(primaryBlue))),
-                                ),
-                              ),
-                              validator: validateUsername,
-                              onSaved: (value) => _username = value,
-                            ),
-                            //  add some padding
-                            addSizedBoxPadding(16.0, 0),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'PASSWORD',
-                                labelStyle: TextStyle(
-                                  fontFamily: stdFontFamily,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(getColourHexFromString(primaryDarkGrey)),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color(getColourHexFromString(primaryBlue))),
-                                ),
-                              ),
-                              obscureText: true,
-                              validator: (value) => value.isEmpty ? 'Password required' : null,
-                              onSaved: (value) => _password = value,
-                            ),
-                            addSizedBoxPadding(16.0, 0),
-                            RaisedButton(
-                              child: Text(
-                                  'Sumbit',
-                                  style: TextStyle(fontSize: 20.0)
-                              ),
-                              onPressed: validateAndSubmit,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );*/
   }
 }

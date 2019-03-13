@@ -8,11 +8,11 @@ const kSecondaryLight = const Color(0xFF88ffff);
 const kSecondaryDark = const Color(0xFF009faf);*/
 
 const String primaryOrange = "#f66669";
-const String primaryBlack = "#101017";
+const String primaryBlack = "#282828";
 const String primaryLightGrey = "#E1E2E4";
 const String primaryMediumGrey = "#E1E2E4";
 const String primaryDarkGrey = "#C8C9CA";
-const String primaryBlue = "#a3d4e7";
+const String primaryBlue = "#1244DD";
 //  background colour
 const String primaryWhiteGrey = "#f2f3f3";
 

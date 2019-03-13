@@ -55,7 +55,11 @@ class Auth implements BaseAuth {
 
       //  return a user model
       //return user;
-    } else {
+    }/*else if(response.statusCode == 400){
+      //  Username or password was incorrect
+
+    }*/
+    else {
 
       //  response will always be null if it is a error code: i.e. status 415
       //  We really need to catch all the types of responses and create a

@@ -108,7 +108,6 @@ class _MainPageState extends State<MainPage> {
           title: Text(
             'WEPLAYBALL',
             style: TextStyle(
-              fontFamily: 'Poppins',
               fontWeight: FontWeight.w800,
               letterSpacing: 0.8,
               fontSize: 15.0,

@@ -13,6 +13,7 @@ final int NO_INTERNET = 404;
 
 abstract class BaseAuth {
   Future<ParsedResponse<UserModel>> requestLoginAPI(String username, String password);
+  Future<ParsedResponse<UserModel>> registerUser(String username, String password, String email, String firstName);
   Future<UserModel> currentUser();
   Future<void> signOut();
 }
@@ -66,6 +67,55 @@ class Auth implements BaseAuth {
       //  switch case and notify user of error.  For now just return null
 
       return new ParsedResponse(NO_INTERNET, new UserModel("", "", "", "", "", AuthStatus.notSignedIn));
+      //return null;
+    }
+  }
+
+  Future<ParsedResponse<UserModel>> registerUser(String username, String password, String email, String firstName) async {
+
+    final url = "https://weplayball.azurewebsites.net/api/token/register";
+
+    var body = json.encode({
+      'username': username,
+      'password': password,
+      'email': email,
+      'firstName': firstName,
+      'confirmPassword': password
+    });
+
+    final response = await http.post(
+        Uri.encodeFull(url),
+        body: body,
+        headers: {'content-type':'application/json'}
+    );
+
+    if (response == null) {
+      return new ParsedResponse(NO_INTERNET, new UserModel("", "", "", "", "", AuthStatus.notSignedIn, errorMessage: "Could not connect"));
+    }
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      var userData = new LoginModel.fromJson(responseJson);
+      await saveCurrentLogin(responseJson);
+
+      var user = new UserModel(
+          userData.userName,
+          userData.token,
+          userData.firstName,
+          userData.email,
+          userData.userId,
+          AuthStatus.signedIn);
+
+      return new ParsedResponse(response.statusCode, user);
+
+      //  return a user model
+      //return user;
+    }else {
+      //  else get error message
+      var parsedBody = json.decode(response.body);
+      var errorMessage = parsedBody['message'];
+
+      return new ParsedResponse(response.statusCode, new UserModel("", "", "", "", "", AuthStatus.notSignedIn, errorMessage: errorMessage));
       //return null;
     }
   }

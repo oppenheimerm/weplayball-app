@@ -8,7 +8,8 @@ class UserModel {
   String email;
   String userId;
   AuthStatus authStatus;
+  String errorMessage;
 
-  UserModel(this.userName, this.token, this.firstName, this.email, this.userId, this.authStatus);
+  UserModel(this.userName, this.token, this.firstName, this.email, this.userId, this.authStatus, {this.errorMessage});
 
 }

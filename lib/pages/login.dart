@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weplayball/pages/register.dart';
 import 'package:weplayball/service/auth/auth_provider.dart';
 import 'package:weplayball/service/authenticationStatus.dart';
 import 'package:weplayball/ui/colors.dart';
@@ -62,6 +63,13 @@ class _LoginPageState extends State<LoginPage> {
         print('Error: $e');
       }
     }
+  }
+
+  void GoToRegister(BuildContext context){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegisterPage(onSignedIn: widget.onSignedIn)),
+    );
   }
 
   void _showLoginError(){
@@ -153,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: <Widget>[
                 Container(
-                  child:SingleChildScrollView(
+                  child: SingleChildScrollView(
                     child: ConstrainedBox(
                       constraints: BoxConstraints(),
                       child: Form(
@@ -163,6 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                           //  Require all children to fill the cross axis
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
+                            //  Username field
                             TextFormField(
                               decoration: InputDecoration(
                                 labelText: 'USERNAME',
@@ -179,8 +188,11 @@ class _LoginPageState extends State<LoginPage> {
                               validator: validateUsername,
                               onSaved: (value) => _username = value,
                             ),
+
                             //  add some padding
-                            addSizedBoxPadding(16.0, 0),
+                            addSizedBoxPadding(12.0, 0),
+
+                            //  Password field
                             TextFormField(
                               decoration: InputDecoration(
                                 labelText: 'PASSWORD',
@@ -197,12 +209,12 @@ class _LoginPageState extends State<LoginPage> {
                               validator: (value) => value.isEmpty ? 'Password required' : null,
                               onSaved: (value) => _password = value,
                             ),
-                            addSizedBoxPadding(16.0, 0),
+                            addSizedBoxPadding(12.0, 0),
 
 
-
+                            // Login button
                             Container(
-                              height: 40.0,
+                              height: 50.0,
                               child: RaisedButton(
                                 elevation: 3.0,
                                 padding: const EdgeInsets.all(12.0),
@@ -210,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text("LOGIN",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
-                                    fontSize: fontSizeH4,
+                                    fontSize: fontSizeH3,
                                   ),
                                 ),
                                 shape: RoundedRectangleBorder(
@@ -221,32 +233,28 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
 
-
-                            /*Container(
-                              height: 40.0,
-                              child: Material(
-                                borderRadius: BorderRadius.circular(20.0),
-                                shadowColor: Color(getColourHexFromString(primaryDarkGrey)),
-                                color: Color(getColourHexFromString(primaryBlue)),
-                                elevation: 5.0,
-                                child: GestureDetector(
-                                  onTap: validateAndSubmit,
-                                  behavior:  HitTestBehavior.deferToChild,
-                                  child: Center(
-                                    child: Text(
-                                      'LOGIN',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: stdFontFamily,
-                                      ),
-                                    ),
+                            //  Register link
+                            //addSizedBoxPadding(6.0, 0),
+                            Container(
+                              alignment: Alignment(1.0, 0.0),
+                              padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                              child: InkWell(
+                                onTap: () => GoToRegister(context),
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                      color: Color(getColourHexFromString(primaryBlue)),
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                      fontSize: fontSizeH4,
+                                      letterSpacing: 0.5,
                                   ),
                                 ),
                               ),
-                            )*/
+                            ),
 
-                            addSizedBoxPadding(16.0, 0),
+                            // Show error if any
+                            addSizedBoxPadding(12.0, 0),
                             Container(
                               child: formHasErrors ?
                               Center(
